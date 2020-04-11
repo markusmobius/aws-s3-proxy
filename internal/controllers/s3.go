@@ -29,6 +29,12 @@ func AwsS3(w http.ResponseWriter, r *http.Request) {
 		path = strings.TrimPrefix(path, c.StripPath)
 	}
 
+	//only allow for screenshots
+	if !strings.Contains(path, "screenShots") {
+		http.Error(w, "Service can only provide screenshots", 403)
+		return
+	}
+
 	// If there is a health check path defined, and if this path matches it,
 	// then return 200 OK and return.
 	// Note: we want to apply the health check *after* the prefix is stripped.
